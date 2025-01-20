@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Car Auction System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .container {
+            margin: 20px auto;
+            width: 80%;
+        }
+        .car-listing {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        .bid-form {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Smart Car Auction</h1>
+    </header>
+    <div class="container">
+        <div class="car-listing">
+            <h2>Toyota Prius 2024 / 2025</h2>
+            <p>Starting Price: $20,000</p>
+            <form class="bid-form" id="bidForm">
+                <input type="number" id="bidAmount" placeholder="Enter your bid" required />
+                <button type="submit">Place Bid</button>
+            </form>
+            <p id="statusMessage"></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('bidForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const bidAmount = document.getElementById('bidAmount').value;
+            const response = await fetch('/place-bid', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ bidAmount })
+            });
+            const result = await response.json();
+            document.getElementById('statusMessage').innerText = result.message;
+        });
+    </script>
+</body>
+</html>
